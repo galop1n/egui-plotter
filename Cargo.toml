@@ -1,6 +1,6 @@
 [package]
 name = "egui-plotter"
-version = "0.7.0"
+version = "0.8.0"
 edition = "2024"
 authors = ["Charles Thompson"]
 license = "MIT"
@@ -15,7 +15,7 @@ exclude = ["images"]
 timechart = ["dep:instant"]
 
 [dependencies]
-egui = "0.32.1"
+egui = "0.33.3"
 plotters-backend = "0.3"
 plotters = "0.3"
 earcutr = "0.4.3"
@@ -23,11 +23,13 @@ earcutr = "0.4.3"
 instant = { version = "0.1", features = ["wasm-bindgen"], optional = true }
 
 [dev-dependencies]
-eframe = "0.32.1"
+eframe = "0.33.3"
 # Hacky way to enable features during testing
 egui-plotter = { path = ".", features = ["timechart"] }
-egui_extras = { version = "0.32.1", features = ["all_loaders"] }
-image = { version = "0.25", features = ["png"] } # Add the types you want support for
+egui_extras = { version = "0.33.3", features = ["all_loaders"] }
+image = { version = "0.25", features = [
+  "png",
+] } # Add the types you want support for
 
 [package.metadata.docs.rs]
 features = ["timechart"]
