@@ -17,7 +17,7 @@ timechart = ["dep:instant"]
 default_fonts = ["egui/default_fonts"]
 
 [dependencies]
-egui = "0.33.3"
+egui = { version = "0.33.3", default-features = false }
 plotters-backend = "0.3"
 plotters = "0.3"
 earcutr = "0.5.0"
