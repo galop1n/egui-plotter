@@ -5,16 +5,16 @@ use std::f32::consts::FRAC_PI_2;
 use std::fmt::{Display, Formatter, Result as FmtResult};
 use std::ops::{Add, AddAssign, MulAssign, Sub, SubAssign};
 
-use egui::load::SizedTexture;
-use egui::{pos2, vec2, Painter, TextureId, Vec2};
 use egui::{
+    Align, Align2, Color32, CornerRadius, FontFamily as EguiFontFamily, FontId, Pos2, Rect, Stroke,
+    Ui,
     epaint::{PathShape, TextShape},
-    Align, Align2, Color32, FontFamily as EguiFontFamily, FontId, Pos2, Rect, Stroke, Ui, CornerRadius,
 };
+use egui::{Painter, TextureId, pos2, vec2};
 use plotters_backend::{
-    text_anchor::{HPos, Pos, VPos},
     BackendColor, BackendCoord, BackendStyle, BackendTextStyle, DrawingBackend, DrawingErrorKind,
     FontFamily as PlottersFontFamily,
+    text_anchor::{HPos, Pos, VPos},
 };
 
 #[derive(Debug, Clone, Copy)]
@@ -211,7 +211,7 @@ impl BgImageSize {
                 let scale = (bounds_width / img_wh_max.x).min(bounds_height / img_wh_max.y);
 
                 let image_wh = img_wh_max * scale;
-                
+
                 Rect::from_center_size(bounds.center(), image_wh)
             }
             Self::Fit => {
@@ -221,7 +221,7 @@ impl BgImageSize {
                 let height = original_bounds.height();
 
                 Self::Ratio(width, height).size_from_bounds(bounds, ui, texture)
-            },
+            }
             Self::Original => {
                 let tex_manager_rwlock = ui.ctx().tex_manager();
                 let tex_manager_rwlock_reader = tex_manager_rwlock.read();
@@ -232,7 +232,7 @@ impl BgImageSize {
                         let [width, height] = meta.size;
 
                         (width as f32, height as f32)
-                    },
+                    }
                     None => {
                         return bounds;
                     }
@@ -268,7 +268,7 @@ impl<'a> EguiBackend<'a> {
             y: 0,
             scale: 1.0,
             bounds,
-            painter: ui.painter().with_clip_rect(bounds)
+            painter: ui.painter().with_clip_rect(bounds),
         }
     }
 
@@ -278,7 +278,8 @@ impl<'a> EguiBackend<'a> {
     pub fn bg_image(self, image_id: TextureId, size: BgImageSize) -> Self {
         let uv = Rect::from_min_max(pos2(0.0, 0.0), pos2(1.0, 1.0));
         let image_bounds = size.size_from_bounds(self.bounds, self.ui, image_id);
-        self.painter.image(image_id, image_bounds, uv, Color32::WHITE);
+        self.painter
+            .image(image_id, image_bounds, uv, Color32::WHITE);
 
         self
     }
@@ -406,7 +407,7 @@ impl<'a> DrawingBackend for EguiBackend<'a> {
                 CornerRadius::default(),
                 Color32::TRANSPARENT,
                 stroke,
-                egui::StrokeKind::Inside
+                egui::StrokeKind::Inside,
             );
         }
 
@@ -447,10 +448,12 @@ impl<'a> DrawingBackend for EguiBackend<'a> {
         let center = self.point_transform(EguiBackendCoord::from(center), self.bounds);
         let color: Color32 = EguiBackendColor::from(style.color()).into();
         if fill {
-            self.painter.circle_filled(center.into(), radius as _, color);
+            self.painter
+                .circle_filled(center.into(), radius as _, color);
         } else {
             let stroke = Stroke::new(style.stroke_width() as f32, color);
-            self.painter.circle(center.into(), radius as _, Color32::TRANSPARENT, stroke);
+            self.painter
+                .circle(center.into(), radius as _, Color32::TRANSPARENT, stroke);
         }
 
         Ok(())

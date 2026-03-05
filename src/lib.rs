@@ -4,11 +4,11 @@ mod backend;
 mod chart;
 pub mod charts;
 
-pub use backend::{EguiBackend, EguiBackendError, BgImageSize};
+pub use backend::{BgImageSize, EguiBackend, EguiBackendError};
 pub use chart::{
-    Chart, MouseButton, MouseConfig, Transform, DEFAULT_MOVE_SCALE, DEFAULT_SCROLL_SCALE,
+    Chart, DEFAULT_MOVE_SCALE, DEFAULT_SCROLL_SCALE, MouseButton, MouseConfig, Transform,
 };
-use egui::{Response, Sense, Ui, UiBuilder, Widget};
+use egui::{Ui, UiBuilder, Widget};
 
 #[cfg(feature = "timechart")]
 use std::ops::Range;
@@ -29,7 +29,7 @@ fn mult_range(range: Range<f32>, mult: f32) -> Range<f32> {
     Range { start, end }
 }
 
-pub struct PlotterCanvas <CB: FnOnce(&mut Ui) -> R, R> {
+pub struct PlotterCanvas<CB: FnOnce(&mut Ui) -> R, R> {
     callback: CB,
     width: Option<f32>,
     height: Option<f32>,
@@ -49,7 +49,7 @@ impl<CB: FnOnce(&mut Ui) -> R, R> PlotterCanvas<CB, R> {
 
         self
     }
-    
+
     pub fn height(mut self, height: f32) -> Self {
         self.height = Some(height);
 
@@ -59,7 +59,7 @@ impl<CB: FnOnce(&mut Ui) -> R, R> PlotterCanvas<CB, R> {
     pub fn set_width(&mut self, width: f32) {
         self.width = Some(width);
     }
-    
+
     pub fn set_height(&mut self, height: f32) {
         self.height = Some(height);
     }
