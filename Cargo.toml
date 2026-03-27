@@ -1,6 +1,6 @@
 [package]
 name = "egui-plotter"
-version = "0.8.0"
+version = "0.9.0"
 edition = "2024"
 authors = ["Charles Thompson"]
 license = "MIT"
@@ -17,7 +17,7 @@ timechart = ["dep:instant"]
 default_fonts = ["egui/default_fonts"]
 
 [dependencies]
-egui = { version = "0.33.3", default-features = false }
+egui = { version = "0.34", default-features = false }
 plotters-backend = "0.3"
 plotters = "0.3"
 earcutr = "0.5.0"
@@ -25,10 +25,10 @@ earcutr = "0.5.0"
 instant = { version = "0.1", features = ["wasm-bindgen"], optional = true }
 
 [dev-dependencies]
-eframe = "0.33.3"
+eframe = "0.34"
 # Hacky way to enable features during testing
 egui-plotter = { path = ".", features = ["timechart"] }
-egui_extras = { version = "0.33.3", features = ["all_loaders"] }
+egui_extras = { version = "0.34", features = ["all_loaders"] }
 image = { version = "0.25", features = [
   "png",
 ] } # Add the types you want support for
